@@ -1,0 +1,538 @@
+/* css/style-manual.css */
+
+/* Estilo base para una mejor gestión del modelo de caja */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    background-color: #f4f7f6; /* Un gris muy claro para el fondo general */
+    color: #333; /* Color de texto principal oscuro */
+    display: flex; /* Permite que el sidebar y el main-content se coloquen lado a lado */
+}
+
+.sidebar {
+    width: 280px; /* Ancho fijo para el sidebar en pantallas grandes */
+    background-color: #2c3e50; /* Azul oscuro/gris para el sidebar */
+    color: #ecf0f1; /* Color de texto claro para el sidebar */
+    padding: 0; /* Sin padding interno en el contenedor del sidebar mismo */
+    height: 100vh; /* Altura completa de la ventana */
+    position: fixed; /* Fijo en la pantalla */
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Scroll vertical si el contenido excede la altura */
+    border-right: 1px solid #34495e; /* Borde sutil a la derecha */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    transition: width 0.3s ease; /* Transición suave para cambios de ancho */
+}
+
+.sidebar-header {
+    padding: 20px 15px;
+    background-color: #34495e; /* Un poco más claro que el sidebar para distinción */
+    text-align: center;
+    border-bottom: 1px solid #46627f; /* Borde inferior para separar del nav */
+    /* Para que el header del sidebar quede fijo si el contenido del sidebar es muy largo y hace scroll */
+    position: sticky;
+    top: 0;
+    z-index: 1001; /* Encima del contenido scrolleable del sidebar */
+}
+
+.sidebar-header h4 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #fff; /* Texto blanco para el título del header */
+}
+
+/* Estilos para nav-links que NO son parte de un acordeón (si los hubiera) */
+.sidebar .nav-link-original { /* Renombrado para evitar conflictos, o ajustar si se usa */
+    color: #bdc3c7;
+    padding: 12px 20px;
+    font-size: 0.95em;
+    border-bottom: 1px solid #34495e;
+    transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
+    display: block; /* Asegurar que ocupe todo el ancho */
+}
+.sidebar .nav-link-original i {
+    margin-right: 10px;
+    width: 20px; 
+    text-align: center;
+}
+.sidebar .nav-link-original:hover,
+.sidebar .nav-link-original.active {
+    background-color: #3b97e0;
+    color: #ffffff;
+    border-left: 3px solid #f1c40f;
+    padding-left: 17px;
+}
+.sidebar .nav-link-original:last-child {
+    border-bottom: none;
+}
+
+
+/* Contenedor de la navegación principal del sidebar, puede ser un div o nav */
+.sidebar-nav-container {
+    padding-top: 0; /* Ajustar si el sidebar-header no es sticky o si hay espacio extra */
+}
+
+
+.main-content {
+    margin-left: 280px; /* Deja espacio para el sidebar */
+    padding: 0; 
+    width: calc(100% - 280px); /* Ocupa el resto del ancho */
+    background-color: #fff; /* Fondo blanco para el contenido principal */
+    transition: margin-left 0.3s ease, width 0.3s ease; /* Transiciones suaves */
+    /* Si el main-content es el que tiene el scroll principal, su altura debe permitirlo */
+    /* height: 100vh; */ /* Podría ser necesario si el body no es el scroller principal */
+    /* overflow-y: auto; */ /* Podría ser necesario si el body no es el scroller principal */
+}
+
+.main-header {
+    background-color: #3498db; 
+    color: white;
+    padding: 20px 30px; 
+    text-align: center;
+    border-bottom: 3px solid #2980b9; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    position: sticky; /* Hace que el header se pegue al borde superior de .main-content */
+    top: 0;           
+    z-index: 1020;    /* Asegura que esté por encima del contenido de las secciones */
+}
+
+.main-header h1 {
+    margin: 0;
+    font-size: 2em; 
+    font-weight: 300; 
+}
+.main-header h1 i {
+    margin-right: 15px;
+}
+
+.manual-section {
+    padding: 25px 30px; 
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0; 
+}
+.manual-section:last-of-type {
+    border-bottom: none; 
+}
+
+.manual-section h2 {
+    color: #2c3e50; 
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db; 
+    font-size: 1.7em; 
+}
+.manual-section h2 i {
+    margin-right: 12px;
+    color: #3498db;
+}
+
+.manual-section h3 {
+    color: #34495e; 
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-size: 1.4em; 
+}
+.manual-section h3 i {
+    margin-right: 8px;
+    color: #5dade2; 
+}
+
+p {
+    margin-bottom: 1em;
+    font-size: 1em; 
+}
+
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 3.8em; 
+    counter-reset: linenumber;
+    background-color: #272822; 
+    border-radius: 5px;
+    overflow-x: auto; 
+    font-size: 0.9em;
+    border: 1px solid #444;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+pre[class*="language-"] > code[class*="language-"] {
+    color: #f8f8f2; 
+    text-shadow: none;
+    white-space: pre; 
+}
+
+.line-numbers .line-numbers-rows > span:before {
+    color: #505050; 
+}
+
+.highlight {
+    background-color: #f1c40f; 
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.note {
+    background-color: #e8f4fd; 
+    border-left: 5px solid #3498db; 
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 5px 5px 0;
+}
+.note i {
+    margin-right: 8px;
+    color: #3498db;
+}
+
+ul, ol {
+    padding-left: 20px; 
+}
+ul li, ol li {
+    margin-bottom: 0.5em;
+}
+.list-group-item ul { 
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+
+
+html {
+  scroll-behavior: smooth; 
+}
+
+/* --- ESTILOS PARA EL ACORDEÓN DEL SIDEBAR (Bootstrap) --- */
+.sidebar .accordion { /* Contenedor principal del acordeón */
+    width: 100%;
+}
+.sidebar .accordion-item {
+    background-color: transparent; /* Fondo transparente para el item */
+    border: none; /* Sin bordes para el item */
+    border-bottom: 1px solid #34495e; /* Separador entre items principales */
+}
+.sidebar .accordion-item:last-child {
+    border-bottom: none;
+}
+
+.sidebar .accordion-header { /* Cabecera de cada item del acordeón */
+    margin-bottom: 0;
+}
+
+.sidebar .accordion-button { /* Botón que expande/colapsa */
+    color: #bdc3c7;
+    background-color: transparent;
+    padding: 12px 20px;
+    font-size: 0.95em;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: none; /* Sin borde para el botón en sí */
+    border-radius: 0; /* Sin bordes redondeados */
+    box-shadow: none; /* Sin sombra de Bootstrap al hacer foco */
+    transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
+}
+
+.sidebar .accordion-button i.fas, /* Iconos FontAwesome dentro del botón */
+.sidebar .accordion-button i.fab {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar .accordion-button:hover {
+    background-color: #3b97e0;
+    color: #ffffff;
+}
+
+.sidebar .accordion-button:not(.collapsed) { /* Botón cuando el panel está ABIERTO */
+    color: #ffffff;
+    background-color: #34495e; /* Un color de fondo para indicar que está activo/abierto */
+    /* border-left: 3px solid #f1c40f; */ /* Opcional: borde izquierdo como los nav-links activos */
+    /* padding-left: 17px; */
+    box-shadow: none;
+}
+/* Estilo para el link activo DENTRO de un acordeón abierto */
+.sidebar .accordion-button:not(.collapsed).active-parent {
+    background-color: #3b97e0; /* Color más brillante si es el padre de un link activo */
+    border-left: 3px solid #f1c40f;
+    padding-left: 17px;
+}
+
+
+.sidebar .accordion-button::after { /* Flecha de Bootstrap */
+    filter: brightness(0) invert(0.8); /* Hace la flecha un gris claro, similar a #bdc3c7 */
+    margin-left: auto; /* Empuja la flecha a la derecha */
+    transition: transform 0.2s ease-in-out;
+}
+.sidebar .accordion-button:hover::after {
+     filter: brightness(0) invert(1); /* Flecha blanca en hover */
+}
+.sidebar .accordion-button:not(.collapsed)::after {
+    filter: brightness(0) invert(1); /* Flecha blanca cuando está abierto */
+}
+
+.sidebar .accordion-body { /* Contenido desplegable */
+    padding: 0; /* Sin padding por defecto en el cuerpo */
+    background-color: rgba(0,0,0,0.15); /* Fondo ligeramente más oscuro para submenús */
+}
+
+.sidebar .accordion-body .nav-link { /* Enlaces dentro del acordeón */
+    display: block;
+    padding: 10px 20px 10px 35px; /* Indentación para sub-enlaces */
+    font-size: 0.9em;
+    color: #adb5bd; /* Color más claro para sub-enlaces */
+    border-bottom: 1px solid #34495e; /* Separador para sub-items */
+    transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
+}
+.sidebar .accordion-body .nav-link:last-child {
+    border-bottom: none;
+}
+
+.sidebar .accordion-body .nav-link i.fas, /* Iconos en sub-enlaces */
+.sidebar .accordion-body .nav-link i.fab {
+    margin-right: 8px;
+    width: 18px;
+    text-align: center;
+    font-size: 0.9em; /* Iconos un poco más pequeños */
+}
+
+.sidebar .accordion-body .nav-link:hover {
+    color: #ffffff;
+    background-color: #3280b9; /* Un azul intermedio para hover en sub-enlaces */
+}
+
+.sidebar .accordion-body .nav-link.active { /* Sub-enlace activo */
+    color: #ffffff;
+    background-color: #3b97e0; /* Mismo color que nav-link activo principal */
+    border-left: 3px solid #e67e22; /* Color de borde diferente para sub-enlace activo */
+    padding-left: 32px; /* Ajuste por el borde */
+}
+
+
+/* --- Media Queries para Responsividad --- */
+
+/* Tablets y escritorios pequeños (hasta 992px) */
+@media (max-width: 991.98px) {
+    .sidebar {
+        width: 240px; 
+    }
+    .main-content {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+    }
+    .main-header h1 {
+        font-size: 1.8em; 
+    }
+    .manual-section h2 {
+        font-size: 1.5em; 
+    }
+    .manual-section h3 {
+        font-size: 1.3em;
+    }
+    .manual-section {
+        padding: 20px 25px; 
+    }
+}
+
+/* Dispositivos móviles (hasta 768px) */
+@media (max-width: 767.98px) {
+    body {
+        display: block; 
+    }
+    .sidebar {
+        width: 100%; 
+        height: auto; 
+        position: relative; 
+        border-right: none;
+        border-bottom: 1px solid #34495e;
+        z-index: auto; 
+        /* Para móviles, el sidebar no necesita ser 100vh fijo, puede scrollear con la página si es largo */
+        /* overflow-y: visible; */ /* Opcional, si quieres que el scroll sea del body */
+    }
+    .sidebar-header {
+        /* Si el sidebar no es fixed, el header del sidebar no necesita ser sticky */
+         position: static; 
+    }
+    .main-content {
+        margin-left: 0; 
+        width: 100%; 
+    }
+    .main-header {
+        padding: 15px 20px;
+        /* El header principal sigue siendo sticky, pero ahora a la ventana directamente */
+    }
+    .main-header h1 {
+        font-size: 1.6em; 
+    }
+    .manual-section {
+        padding: 20px 15px; 
+    }
+     .manual-section h2 {
+        font-size: 1.4em;
+    }
+    .manual-section h3 {
+        font-size: 1.2em;
+    }
+    pre[class*="language-"].line-numbers {
+        font-size: 0.85em; 
+        padding-left: 3.2em;
+    }
+    .sidebar .accordion-button,
+    .sidebar .nav-link-original { /* Aplicar a ambos tipos de link de primer nivel */
+        font-size: 0.9em; 
+        padding: 10px 15px;
+    }
+    .sidebar .accordion-button.active-parent,
+    .sidebar .nav-link-original.active {
+        padding-left: 12px;
+    }
+    .sidebar .accordion-body .nav-link {
+        padding: 8px 15px 8px 30px; /* Ajustar padding para móviles */
+        font-size: 0.85em;
+    }
+     .sidebar .accordion-body .nav-link.active {
+        padding-left: 27px;
+     }
+}
+
+/* Pantallas muy pequeñas (opcional, para ajustes aún más finos) */
+@media (max-width: 480px) {
+    .main-header h1 {
+        font-size: 1.4em;
+    }
+    .manual-section h2 {
+        font-size: 1.3em;
+    }
+    .manual-section h3 {
+        font-size: 1.1em;
+    }
+    p {
+        font-size: 0.95em;
+    }
+}
+/* ... (tus estilos existentes) ... */
+
+.main-header {
+    background-color: #3498db; 
+    color: white;
+    /* padding: 20px 30px;  Padding se manejará en el wrapper si es necesario */
+    text-align: center; /* Centrará el .header-content-wrapper si es más estrecho que .main-header */
+    border-bottom: 3px solid #2980b9; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    position: sticky; 
+    top: 0;           
+    z-index: 1020;    
+}
+
+.header-content-wrapper {
+    display: flex; /* Activa Flexbox */
+    align-items: center; /* Centra los items verticalmente */
+    justify-content: space-between; /* Espacio entre título e imagen */
+    padding: 15px 30px; /* Padding original del main-header, ahora en el wrapper */
+    max-width: 1200px; /* Opcional: un ancho máximo para el contenido del header */
+    margin: 0 auto; /* Centra el wrapper si tiene max-width */
+}
+
+.main-header h1 {
+    margin: 0; /* Elimina el margen por defecto del h1 */
+    font-size: 2em; 
+    font-weight: 300; 
+    text-align: left; /* Alinea el texto del título a la izquierda dentro de su espacio */
+    flex-grow: 1; /* Permite que el título ocupe el espacio disponible */
+}
+
+.main-header h1 i {
+    margin-right: 15px;
+}
+
+.header-avatar {
+    width: 60px; /* Tamaño deseado para el avatar */
+    height: 60px; /* Mantener la proporción si es cuadrada */
+    border-radius: 50%; /* Hace la imagen redonda */
+    margin-left: 20px; /* Espacio entre el título y la imagen */
+    border: 2px solid white; /* Opcional: un borde blanco alrededor del avatar */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+}
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 767.98px) {
+    .header-content-wrapper {
+        flex-direction: column; /* Apila título e imagen en móviles */
+        padding: 15px 20px;
+    }
+    .main-header h1 {
+        font-size: 1.6em; 
+        text-align: center; /* Centra el título en móviles */
+        margin-bottom: 10px; /* Espacio debajo del título antes de la imagen */
+    }
+    .header-avatar {
+        width: 50px;
+        height: 50px;
+        margin-left: 0; /* Sin margen izquierdo en móviles */
+        margin-top: 10px; /* Espacio arriba de la imagen */
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header h1 {
+        font-size: 1.4em;
+    }
+     .header-avatar {
+        width: 40px;
+        height: 40px;
+    }
+}
+/* ... (tus estilos existentes en style-manual.css para .sidebar, .main-content, .manual-section, etc.) ... */
+
+/* ESTILOS PARA EL FOOTER (SOLO UNA DEFINICIÓN) */
+.main-footer {
+    text-align: center;
+    padding: 30px 20px; /* Padding aumentado */
+    background-color: #343a40; /* Fondo oscuro */
+    color: #f8f9fa; /* Color de texto claro para contraste con el fondo oscuro */
+    border-top: 3px solid #495057; /* Borde superior sutil */
+    font-size: 0.9em;
+    margin-top: 40px; /* Añade un poco de espacio sobre el footer */
+}
+
+.main-footer p {
+    margin-bottom: 0.5rem; /* Espacio entre párrafos del footer */
+}
+
+.main-footer .social-icon {
+    color: #adb5bd; /* Un gris claro para los iconos, que resalta bien en #343a40 */
+    margin: 0 10px; /* Espacio entre iconos */
+    font-size: 1em; /* Tamaño base, fa-2x lo hará más grande en el HTML */
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.main-footer .social-icon:hover {
+    color: #0d6efd; /* Color primario de Bootstrap al pasar el ratón */
+    transform: scale(1.15); /* Un poco más de zoom en hover */
+}
+
+.main-footer .fa-heart {
+    color: #e74c3c; /* Rojo para el corazón */
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 767px) {
+    .main-footer .text-md-start,
+    .main-footer .text-md-end {
+        text-align: center !important;
+    }
+    .main-footer .social-icon {
+        margin: 0 8px; /* Menos margen en pantallas pequeñas */
+    }
+}
+
+/* ... (el resto de tus media queries y otros estilos) ... */
